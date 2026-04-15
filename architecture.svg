@@ -1,0 +1,162 @@
+<svg viewBox="0 0 900 620" xmlns="http://www.w3.org/2000/svg" font-family="'Courier New', monospace">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0d1117"/>
+      <stop offset="100%" stop-color="#161b22"/>
+    </linearGradient>
+    <linearGradient id="node-grad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#1f2937"/>
+      <stop offset="100%" stop-color="#111827"/>
+    </linearGradient>
+    <linearGradient id="accent-grad" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#3b82f6"/>
+      <stop offset="100%" stop-color="#6366f1"/>
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+    </filter>
+    <marker id="arrow" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L8,3 z" fill="#3b82f6"/>
+    </marker>
+    <marker id="arrow-green" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L8,3 z" fill="#10b981"/>
+    </marker>
+    <marker id="arrow-purple" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L8,3 z" fill="#8b5cf6"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="900" height="620" fill="url(#bg)"/>
+  <rect width="900" height="4" fill="url(#accent-grad)"/>
+
+  <!-- Title -->
+  <text x="450" y="38" text-anchor="middle" fill="#f9fafb" font-size="16" font-weight="bold" letter-spacing="3">RAG-BASED QA SYSTEM — ARCHITECTURE</text>
+  <text x="450" y="56" text-anchor="middle" fill="#6b7280" font-size="10" letter-spacing="2">FastAPI · FAISS · sentence-transformers · OpenAI</text>
+
+  <!-- ─── UPLOAD FLOW ────────────────────────────────── -->
+  <!-- Label -->
+  <text x="30" y="95" fill="#3b82f6" font-size="10" letter-spacing="2" font-weight="bold">UPLOAD FLOW</text>
+  <line x1="30" y1="100" x2="440" y2="100" stroke="#3b82f6" stroke-width="0.5" stroke-dasharray="4,4"/>
+
+  <!-- Client (Upload) -->
+  <rect x="30" y="110" width="120" height="60" rx="6" fill="url(#node-grad)" stroke="#3b82f6" stroke-width="1.5"/>
+  <text x="90" y="136" text-anchor="middle" fill="#93c5fd" font-size="11" font-weight="bold">CLIENT</text>
+  <text x="90" y="152" text-anchor="middle" fill="#6b7280" font-size="9">POST /upload</text>
+  <text x="90" y="164" text-anchor="middle" fill="#6b7280" font-size="9">PDF · TXT</text>
+
+  <!-- Arrow: Client → FastAPI -->
+  <line x1="150" y1="140" x2="198" y2="140" stroke="#3b82f6" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- FastAPI -->
+  <rect x="200" y="110" width="140" height="60" rx="6" fill="url(#node-grad)" stroke="#3b82f6" stroke-width="1.5"/>
+  <text x="270" y="132" text-anchor="middle" fill="#93c5fd" font-size="11" font-weight="bold">FastAPI</text>
+  <text x="270" y="148" text-anchor="middle" fill="#6b7280" font-size="9">Pydantic validation</text>
+  <text x="270" y="162" text-anchor="middle" fill="#6b7280" font-size="9">BackgroundTasks</text>
+
+  <!-- Arrow: FastAPI → Doc Processor -->
+  <line x1="340" y1="140" x2="388" y2="140" stroke="#3b82f6" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <text x="364" y="133" text-anchor="middle" fill="#4b5563" font-size="8">async</text>
+
+  <!-- Doc Processor -->
+  <rect x="390" y="110" width="150" height="60" rx="6" fill="url(#node-grad)" stroke="#6366f1" stroke-width="1.5"/>
+  <text x="465" y="132" text-anchor="middle" fill="#a5b4fc" font-size="11" font-weight="bold">DocumentProcessor</text>
+  <text x="465" y="148" text-anchor="middle" fill="#6b7280" font-size="9">pdfplumber / .read_text()</text>
+  <text x="465" y="162" text-anchor="middle" fill="#6b7280" font-size="9">sliding-window chunks</text>
+
+  <!-- Arrow: DocProcessor → Embedder -->
+  <line x1="540" y1="140" x2="588" y2="140" stroke="#6366f1" stroke-width="1.5" marker-end="url(#arrow-purple)"/>
+
+  <!-- Embedder -->
+  <rect x="590" y="110" width="150" height="60" rx="6" fill="url(#node-grad)" stroke="#8b5cf6" stroke-width="1.5"/>
+  <text x="665" y="130" text-anchor="middle" fill="#c4b5fd" font-size="11" font-weight="bold">Embeddings</text>
+  <text x="665" y="146" text-anchor="middle" fill="#6b7280" font-size="9">sentence-transformers</text>
+  <text x="665" y="162" text-anchor="middle" fill="#6b7280" font-size="9">all-MiniLM-L6-v2</text>
+
+  <!-- Arrow: Embedder → FAISS -->
+  <line x1="740" y1="140" x2="788" y2="140" stroke="#8b5cf6" stroke-width="1.5" marker-end="url(#arrow-purple)"/>
+
+  <!-- FAISS -->
+  <rect x="790" y="110" width="80" height="60" rx="6" fill="url(#node-grad)" stroke="#10b981" stroke-width="2"/>
+  <text x="830" y="136" text-anchor="middle" fill="#6ee7b7" font-size="11" font-weight="bold">FAISS</text>
+  <text x="830" y="152" text-anchor="middle" fill="#6b7280" font-size="9">IndexFlatIP</text>
+  <text x="830" y="164" text-anchor="middle" fill="#6b7280" font-size="9">persisted</text>
+
+  <!-- ─── ASK FLOW ──────────────────────────────────── -->
+  <text x="30" y="225" fill="#10b981" font-size="10" letter-spacing="2" font-weight="bold">ASK FLOW</text>
+  <line x1="30" y1="230" x2="440" y2="230" stroke="#10b981" stroke-width="0.5" stroke-dasharray="4,4"/>
+
+  <!-- Client (Ask) -->
+  <rect x="30" y="240" width="120" height="60" rx="6" fill="url(#node-grad)" stroke="#10b981" stroke-width="1.5"/>
+  <text x="90" y="266" text-anchor="middle" fill="#6ee7b7" font-size="11" font-weight="bold">CLIENT</text>
+  <text x="90" y="282" text-anchor="middle" fill="#6b7280" font-size="9">POST /ask</text>
+  <text x="90" y="294" text-anchor="middle" fill="#6b7280" font-size="9">{ question, top_k }</text>
+
+  <!-- Arrow: Client → Rate Limiter -->
+  <line x1="150" y1="270" x2="198" y2="270" stroke="#10b981" stroke-width="1.5" marker-end="url(#arrow-green)"/>
+
+  <!-- Rate Limiter -->
+  <rect x="200" y="240" width="140" height="60" rx="6" fill="url(#node-grad)" stroke="#f59e0b" stroke-width="1.5"/>
+  <text x="270" y="262" text-anchor="middle" fill="#fcd34d" font-size="11" font-weight="bold">Rate Limiter</text>
+  <text x="270" y="278" text-anchor="middle" fill="#6b7280" font-size="9">slowapi</text>
+  <text x="270" y="292" text-anchor="middle" fill="#6b7280" font-size="9">10 req/min/IP</text>
+
+  <!-- Arrow: Rate Limiter → FAISS search -->
+  <line x1="340" y1="270" x2="388" y2="270" stroke="#10b981" stroke-width="1.5" marker-end="url(#arrow-green)"/>
+
+  <!-- FAISS Search -->
+  <rect x="390" y="240" width="150" height="60" rx="6" fill="url(#node-grad)" stroke="#10b981" stroke-width="1.5"/>
+  <text x="465" y="262" text-anchor="middle" fill="#6ee7b7" font-size="11" font-weight="bold">VectorStore.search()</text>
+  <text x="465" y="278" text-anchor="middle" fill="#6b7280" font-size="9">embed query</text>
+  <text x="465" y="292" text-anchor="middle" fill="#6b7280" font-size="9">top-k chunks + scores</text>
+
+  <!-- FAISS vertical connector -->
+  <line x1="830" y1="170" x2="830" y2="240" stroke="#10b981" stroke-width="1" stroke-dasharray="4,3"/>
+  <line x1="540" y1="270" x2="828" y2="270" stroke="#10b981" stroke-width="1" stroke-dasharray="4,3" marker-end="url(#arrow-green)"/>
+
+  <!-- Arrow: VectorStore → RAG Pipeline -->
+  <line x1="465" y1="300" x2="465" y2="330" stroke="#10b981" stroke-width="1.5" marker-end="url(#arrow-green)"/>
+
+  <!-- RAG Pipeline -->
+  <rect x="340" y="330" width="250" height="70" rx="6" fill="url(#node-grad)" stroke="#10b981" stroke-width="2"/>
+  <text x="465" y="354" text-anchor="middle" fill="#6ee7b7" font-size="12" font-weight="bold">RAGPipeline</text>
+  <text x="465" y="372" text-anchor="middle" fill="#6b7280" font-size="9">build context from retrieved chunks</text>
+  <text x="465" y="386" text-anchor="middle" fill="#6b7280" font-size="9">prompt construction</text>
+
+  <!-- Arrow: RAGPipeline → OpenAI -->
+  <line x1="590" y1="365" x2="638" y2="365" stroke="#f59e0b" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- OpenAI -->
+  <rect x="640" y="333" width="150" height="60" rx="6" fill="url(#node-grad)" stroke="#f59e0b" stroke-width="1.5"/>
+  <text x="715" y="357" text-anchor="middle" fill="#fcd34d" font-size="11" font-weight="bold">OpenAI API</text>
+  <text x="715" y="373" text-anchor="middle" fill="#6b7280" font-size="9">GPT-3.5-turbo</text>
+  <text x="715" y="387" text-anchor="middle" fill="#6b7280" font-size="9">grounded answer</text>
+
+  <!-- Arrow: RAGPipeline → Response -->
+  <line x1="465" y1="400" x2="465" y2="430" stroke="#10b981" stroke-width="1.5" marker-end="url(#arrow-green)"/>
+
+  <!-- Response box -->
+  <rect x="340" y="430" width="250" height="65" rx="6" fill="url(#node-grad)" stroke="#6b7280" stroke-width="1"/>
+  <text x="465" y="452" text-anchor="middle" fill="#d1d5db" font-size="11" font-weight="bold">JSON Response</text>
+  <text x="465" y="468" text-anchor="middle" fill="#6b7280" font-size="9">answer · sources · scores</text>
+  <text x="465" y="482" text-anchor="middle" fill="#6b7280" font-size="9">latency_ms</text>
+
+  <!-- ─── LEGEND ──────────────────────────────────────── -->
+  <rect x="30" y="510" width="840" height="90" rx="6" fill="#0d1117" stroke="#1f2937" stroke-width="1"/>
+  <text x="50" y="532" fill="#6b7280" font-size="9" letter-spacing="2" font-weight="bold">LEGEND</text>
+
+  <line x1="50" y1="550" x2="90" y2="550" stroke="#3b82f6" stroke-width="2" marker-end="url(#arrow)"/>
+  <text x="97" y="554" fill="#9ca3af" font-size="10">Upload / ingest path</text>
+
+  <line x1="230" y1="550" x2="270" y2="550" stroke="#10b981" stroke-width="2" marker-end="url(#arrow-green)"/>
+  <text x="277" y="554" fill="#9ca3af" font-size="10">Query / answer path</text>
+
+  <line x1="420" y1="550" x2="460" y2="550" stroke="#f59e0b" stroke-width="2" marker-end="url(#arrow)"/>
+  <text x="467" y="554" fill="#9ca3af" font-size="10">LLM call</text>
+
+  <rect x="560" y="541" width="12" height="12" rx="2" fill="none" stroke="#10b981" stroke-width="2"/>
+  <text x="578" y="554" fill="#9ca3af" font-size="10">FAISS (persisted to disk)</text>
+
+  <text x="50" y="582" fill="#4b5563" font-size="9">Chunk size: 500 chars · Overlap: 50 chars · Embedding: all-MiniLM-L6-v2 (384-dim) · Similarity: cosine (IndexFlatIP) · Threshold: 0.25</text>
+</svg>
